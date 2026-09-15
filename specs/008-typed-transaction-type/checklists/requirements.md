@@ -31,6 +31,6 @@
 
 ## Notes
 
-- The supported values are explicitly bounded to `DEBIT` and `TRANSFER`.
+- The supported values are explicitly bounded to `DEBIT`, `TRANSFER`, and `PIX`.
 - Real authentication and authorization are explicitly out of scope.
 - The specification is ready for planning.
