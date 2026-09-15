@@ -1,6 +1,8 @@
 package com.corebank.infrastructure.web;
 
-import com.corebank.application.command.CreateAccountUseCase;
+import java.math.BigDecimal;
+import java.util.UUID;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import java.util.UUID;
+import com.corebank.application.command.CreateAccountUseCase;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @RestController
 @RequestMapping("/api/v1/test/accounts")
@@ -24,7 +29,7 @@ public class TestAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateAccountUseCase.CreateAccountResult> createTestAccount(@RequestBody CreateTestAccountRequest request) {
+    public ResponseEntity<CreateAccountUseCase.CreateAccountResult> createTestAccount(@RequestBody @Valid CreateTestAccountRequest request) {
         CreateAccountUseCase.CreateAccountCommand command = new CreateAccountUseCase.CreateAccountCommand(
                 request.accountId(),
                 request.initialBalance()
@@ -33,5 +38,8 @@ public class TestAccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    public record CreateTestAccountRequest(UUID accountId, BigDecimal initialBalance) {}
+    public record CreateTestAccountRequest(
+            @NotNull(message = "accountId is required") UUID accountId, 
+            @NotNull(message = "initialBalance is required") @PositiveOrZero(message = "initialBalance must be positive or zero") BigDecimal initialBalance
+    ) {}
 }

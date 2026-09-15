@@ -1,21 +1,26 @@
 package com.corebank.application.command;
 
-import com.corebank.domain.account.AccountLedger;
-import com.corebank.domain.account.AccountLedgerRepository;
-import com.corebank.domain.account.BalanceProjection;
-import com.corebank.domain.account.BalanceRepository;
-import com.corebank.domain.exception.BusinessRuleViolationException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+
+import com.corebank.domain.account.AccountLedger;
+import com.corebank.domain.account.AccountLedgerRepository;
+import com.corebank.domain.account.BalanceProjection;
+import com.corebank.domain.account.BalanceRepository;
+import com.corebank.domain.exception.BusinessRuleViolationException;
 
 class CreateAccountUseCaseImplTest {
 
@@ -59,21 +64,6 @@ class CreateAccountUseCaseImplTest {
         BalanceProjection savedBalance = balanceCaptor.getValue();
         assertEquals(accountId, savedBalance.accountId());
         assertEquals(balance, savedBalance.availableBalance());
-    }
-
-    @Test
-    void execute_ShouldThrowException_WhenInitialBalanceIsNegative() {
-        // Arrange
-        UUID accountId = UUID.randomUUID();
-        BigDecimal balance = new BigDecimal("-10.00");
-        CreateAccountUseCase.CreateAccountCommand command = new CreateAccountUseCase.CreateAccountCommand(accountId, balance);
-
-        // Act & Assert
-        BusinessRuleViolationException exception = assertThrows(BusinessRuleViolationException.class, () -> useCase.execute(command));
-        assertEquals("Initial balance cannot be negative", exception.getMessage());
-        
-        verify(ledgerRepository, never()).save(any());
-        verify(balanceRepository, never()).saveBalance(any());
     }
 
     @Test

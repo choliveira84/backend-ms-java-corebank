@@ -108,6 +108,6 @@ Task: "Create integration test..."
 
 ## Phase 5: Convergence
 
-- [ ] T007 CRITICAL Add @Valid to TestAccountController endpoint and Bean Validation annotations (@NotNull, @PositiveOrZero) to CreateTestAccountRequest DTO per Constitution X (contradicts)
-- [ ] T008 [P] Add timeout assertion (< 200ms) to TestAccountControllerTest per SC-001 (partial)
+- [X] T007 CRITICAL Add @Valid to TestAccountController endpoint and Bean Validation annotations (@NotNull, @PositiveOrZero) to CreateTestAccountRequest DTO per Constitution X (contradicts)
+- [X] T008 [P] Add timeout assertion (< 200ms) to TestAccountControllerTest per SC-001 (partial)
 
