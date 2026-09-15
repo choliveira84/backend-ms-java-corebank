@@ -6,6 +6,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.net.URI;
 import java.util.List;
@@ -39,6 +40,15 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         problemDetail.setProperty("invalid_params", invalidParams);
+        return problemDetail;
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ProblemDetail handleUnreadableRequest(HttpMessageNotReadableException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
+                "Invalid request content.");
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setType(URI.create("about:blank"));
         return problemDetail;
     }
 

@@ -34,8 +34,8 @@ public class BalanceProjectionUpdater {
             UUID accountId = UUID.fromString(node.get("accountId").asText());
                 var existing = repository.getBalance(accountId);
                 if (existing.isEmpty()) {
-                log.warn("Projection skipped because no initial balance exists for account {}", accountId);
-                return;
+                    log.warn("Projection skipped because no initial balance exists for account {}", accountId);
+                    return;
                 }
 
                 UUID transactionId = UUID.fromString(node.get("transactionId").asText());
@@ -50,7 +50,7 @@ public class BalanceProjectionUpdater {
                     : LocalDateTime.now(consistencyPolicy.clock());
                 ProjectionFreshness freshness = consistencyPolicy.freshnessOf(eventTime);
                 if (freshness.stale()) {
-                log.warn("Stale transaction event detected for account {} with age {} and threshold {}",
+                    log.warn("Stale transaction event detected for account {} with age {} and threshold {}",
                             accountId, freshness.age(), freshness.maxDelay());
                 }
 

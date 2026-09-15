@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.annotation.Validated;
 
 import com.corebank.application.command.AuthorizeTransactionUseCase;
+import com.corebank.domain.transaction.TransactionType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,9 +20,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestController
 @RequestMapping("/api/v1/transactions")
@@ -56,6 +57,7 @@ public class TransactionController {
             @Positive(message = "amount must be greater than zero")
             BigDecimal amount,
 
-                @NotBlank(message = "type is required")
-            String type) {}
+                @NotNull(message = "type is required")
+                @Schema(description = "Supported transaction type", example = "DEBIT")
+                TransactionType type) {}
 }

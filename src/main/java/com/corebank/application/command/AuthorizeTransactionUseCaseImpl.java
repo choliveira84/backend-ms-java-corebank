@@ -49,13 +49,13 @@ public class AuthorizeTransactionUseCaseImpl implements AuthorizeTransactionUseC
 
         UUID transactionId = randomUUID();
         TransactionHistory history = new TransactionHistory(
-                transactionId, ledger.getAccountId(), command.amount(), command.type(), "AUTHORIZED",
+                transactionId, ledger.getAccountId(), command.amount(), command.type().name(), "AUTHORIZED",
                 LocalDateTime.now());
         historyRepository.save(history);
 
         String payload = String.format(
                 "{\"eventId\":\"%s\", \"transactionId\":\"%s\", \"accountId\":\"%s\", \"amount\":%s, \"type\":\"%s\", \"status\":\"AUTHORIZED\", \"timestamp\":\"%s\"}",
-                randomUUID(), transactionId, ledger.getAccountId(), command.amount(), command.type(), LocalDateTime.now());
+                randomUUID(), transactionId, ledger.getAccountId(), command.amount(), command.type().name(), LocalDateTime.now());
 
         OutboxEvent event = new OutboxEvent(
                 randomUUID(), transactionId, "TransactionAuthorizedEvent", payload, false, LocalDateTime.now());
