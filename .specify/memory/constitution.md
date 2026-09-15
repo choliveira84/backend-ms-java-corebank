@@ -1,8 +1,9 @@
 <!--
 Sync Impact Report:
-- Version change: 1.2.0 -> 1.3.0
+- Version change: 1.3.0 -> 1.4.0
 - Modified principles:
-  - Added: VIII. API Documentation (OpenAPI)
+  - Modified: I. Hexagonal Architecture (Ports and Adapters) (explicitly defining IN/OUT division and repository adapter separation)
+  - Added: IX. SOLID and Clean Code Principles
 - Added sections: N/A
 - Removed sections: N/A
 - Follow-up TODOs: N/A
@@ -12,7 +13,7 @@ Sync Impact Report:
 ## Core Principles
 
 ### I. Hexagonal Architecture (Ports and Adapters)
-The core domain must be placed at the center of the application and must remain completely agnostic of infrastructure, databases, or external frameworks. All external interactions must happen through explicit ports and adapters.
+The core domain must be placed at the center of the application and must remain completely agnostic of infrastructure, databases, or external frameworks. All external interactions must happen through explicit ports (IN and OUT) and adapters. There must be clear divisions between IN and OUT. For example, OUT adapters such as data access must be cleanly separated: a Spring Data JPA interface handles framework interactions, while a separate repository adapter class implements the domain's OUT port and uses the JPA interface internally.
 
 ### II. Physical CQRS & Event Sourcing
 Write operations (10% of load) and read operations (90% of load) must be physically segregated to guarantee independent scalability and database load isolation. The absolute truth of the system is the immutable stream of past events (Event Sourcing) stored in PostgreSQL, not the consolidated balance.
@@ -34,6 +35,9 @@ Development activities MUST leverage the globally installed AI skills (agentic t
 
 ### VIII. API Documentation (OpenAPI)
 The application API MUST be documented and exposed using the OpenAPI specification. This ensures a standardized, discoverable, and interactive contract for all REST endpoints, facilitating upstream integration and front-end development.
+
+### IX. SOLID and Clean Code Principles
+The entire application MUST strictly adhere to SOLID foundations, general software engineering best practices, and well-established design patterns. Development MUST follow DRY (Don't Repeat Yourself) to minimize code duplication and YAGNI (You Aren't Gonna Need It) to prevent over-engineering and premature optimization.
 
 ## Technology Stack & Infrastructure
 
@@ -57,4 +61,4 @@ The application API MUST be documented and exposed using the OpenAPI specificati
 - PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.3.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.4.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
