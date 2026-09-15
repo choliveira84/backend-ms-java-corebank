@@ -42,14 +42,14 @@ description: "Task list for Check Balance feature"
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T001 [P] [US1] Create unit test for the Use Case in `src/test/java/com/corebank/application/query/GetAccountBalanceQueryImplTest.java` (mocking `BalanceRepository`)
-- [ ] T002 [P] [US1] Create integration test for Controller in `src/test/java/com/corebank/infrastructure/web/AccountBalanceControllerTest.java` using MockMvc (with 200, 400, 404 scenarios and timeout <50ms assertion per SC-001)
+- [x] T001 [P] [US1] Create unit test for the Use Case in `src/test/java/com/corebank/application/query/GetAccountBalanceQueryImplTest.java` (mocking `BalanceRepository`)
+- [x] T002 [P] [US1] Create integration test for Controller in `src/test/java/com/corebank/infrastructure/web/AccountBalanceControllerTest.java` using MockMvc (with 200, 400, 404 scenarios and timeout <50ms assertion per SC-001)
 
 ### Implementation for User Story 1
 
-- [ ] T003 [P] [US1] Create Use Case interface and records in `src/main/java/com/corebank/application/query/GetAccountBalanceQuery.java`
-- [ ] T004 [US1] Implement Use Case in `src/main/java/com/corebank/application/query/GetAccountBalanceQueryImpl.java` (Inject `BalanceRepository` and retrieve the balance projection)
-- [ ] T005 [US1] Implement Controller in `src/main/java/com/corebank/infrastructure/web/AccountBalanceController.java` (Expose `GET /api/v1/accounts/{accountId}/balance`, add OpenAPI annotations like `@Operation`, `@ApiResponses`, `@Tag` per Constitution VIII, call Use Case, handle 404 if missing)
+- [x] T003 [P] [US1] Create Use Case interface and records in `src/main/java/com/corebank/application/query/GetAccountBalanceQuery.java`
+- [x] T004 [US1] Implement Use Case in `src/main/java/com/corebank/application/query/GetAccountBalanceQueryImpl.java` (Inject `BalanceRepository` and retrieve the balance projection)
+- [x] T005 [US1] Implement Controller in `src/main/java/com/corebank/infrastructure/web/AccountBalanceController.java` (Expose `GET /api/v1/accounts/{accountId}/balance`, add OpenAPI annotations like `@Operation`, `@ApiResponses`, `@Tag` per Constitution VIII, call Use Case, handle 404 if missing)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -59,7 +59,7 @@ description: "Task list for Check Balance feature"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T006 Run quickstart.md validation to manually verify the full flow (200 OK, 404 Not Found, 400 Bad Request)
+- [x] T006 Run quickstart.md validation to manually verify the full flow (200 OK, 404 Not Found, 400 Bad Request)
 
 ---
 
@@ -103,3 +103,12 @@ Task: "Create integration test..."
 1. Complete Phase 3: User Story 1
 2. **STOP and VALIDATE**: Test User Story 1 independently using `quickstart.md`
 3. MVP is ready for dev/test environments.
+
+---
+
+## Phase 5: Convergence
+
+**Purpose**: Close remaining gaps between spec/plan intent and current implementation
+
+- [x] T007 [US1] Remove duplicate query port pair (`GetBalanceQuery.java` and `GetBalanceQueryImpl.java` in `src/main/java/com/corebank/application/query/`) and refactor `AccountController` in `src/main/java/com/corebank/infrastructure/web/AccountController.java` to use `GetAccountBalanceQuery` instead, consolidating the balance query into a single IN port per Constitution IX (contradicts)
+- [x] T008 [US1] Verify and ensure the global exception handler returns a structured 400 error body (with message) for `MethodArgumentTypeMismatchException` on invalid UUID path variables in the balance endpoint, per FR-004 and edge case "identificador malformado" (partial)

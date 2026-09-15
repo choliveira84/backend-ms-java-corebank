@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.corebank.application.query.GetBalanceQuery;
+import com.corebank.application.query.GetAccountBalanceQuery;
 import com.corebank.domain.exception.ResourceNotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +22,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Accounts", description = "Account Management and Inquiry Endpoints")
 public class AccountController {
 
-    private final GetBalanceQuery query;
+    private final GetAccountBalanceQuery query;
 
-    public AccountController(GetBalanceQuery query) {
+    public AccountController(GetAccountBalanceQuery query) {
         this.query = query;
     }
 
@@ -34,13 +34,11 @@ public class AccountController {
             @ApiResponse(responseCode = "404", description = "Account not found")
     })
     @GetMapping("/balance")
-    public ResponseEntity<?> getBalance(
+    public ResponseEntity<GetAccountBalanceQuery.Result> getBalance(
             @Parameter(description = "Authenticated Account ID", required = true)
             @RequestHeader("X-Account-Id") UUID accountId) {
-        var projection = query.execute(accountId);
-        if (projection.isEmpty()) {
-            throw new ResourceNotFoundException("Account " + accountId + " not found");
-        }
-        return ResponseEntity.ok(projection.get());
+        return query.execute(accountId)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Account " + accountId + " not found"));
     }
 }

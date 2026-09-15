@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -38,6 +39,14 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         problemDetail.setProperty("invalid_params", invalidParams);
+        return problemDetail;
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ProblemDetail handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Invalid parameter type: " + ex.getName());
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setType(URI.create("about:blank"));
         return problemDetail;
     }
 
