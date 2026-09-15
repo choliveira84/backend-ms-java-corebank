@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report:
-- Version change: 1.5.0 -> 1.6.0
-- Modified principles:
-  - Modified: I. Hexagonal Architecture (Ports and Adapters) (explicitly structured to mandate that both use cases and repositories must be defined as interfaces with concrete implementations to enforce IN and OUT ports)
-- Added sections: N/A
+- Version change: 1.6.0 -> 1.7.0
+- Modified principles: N/A
+- Added sections:
+  - X. Controller Input Validation
 - Removed sections: N/A
 - Follow-up TODOs: N/A
 -->
@@ -40,6 +40,9 @@ The application API MUST be documented and exposed using the OpenAPI specificati
 ### IX. SOLID and Clean Code Principles
 The entire application MUST strictly adhere to SOLID foundations, general software engineering best practices, and well-established design patterns. Development MUST follow DRY (Don't Repeat Yourself) to minimize code duplication and YAGNI (You Aren't Gonna Need It) to prevent over-engineering and premature optimization.
 
+### X. Controller Input Validation
+Every controller endpoint that receives a request body MUST validate the payload using Java Bean Validation annotations (e.g., `@Valid` or `@Validated`). This ensures that invalid data is rejected at the system boundaries before reaching the application layer.
+
 ## Technology Stack & Infrastructure
 
 - **Backend:** Java 17 or 21 with Spring Boot.
@@ -62,4 +65,4 @@ The entire application MUST strictly adhere to SOLID foundations, general softwa
 - PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.6.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.7.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
