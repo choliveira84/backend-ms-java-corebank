@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report:
-- Version change: 1.1.0 -> 1.2.0
+- Version change: 1.2.0 -> 1.3.0
 - Modified principles:
-  - Added: VII. AI Skill Utilization
+  - Added: VIII. API Documentation (OpenAPI)
 - Added sections: N/A
 - Removed sections: N/A
 - Follow-up TODOs: N/A
@@ -32,9 +32,13 @@ Unit tests MUST always be implemented for every new feature, ensuring robustness
 ### VII. AI Skill Utilization
 Development activities MUST leverage the globally installed AI skills (agentic tools) whenever appropriate. The availability of these global skills must be continuously verified, and they should be actively used to ensure maximum productivity and adherence to established patterns.
 
+### VIII. API Documentation (OpenAPI)
+The application API MUST be documented and exposed using the OpenAPI specification. This ensures a standardized, discoverable, and interactive contract for all REST endpoints, facilitating upstream integration and front-end development.
+
 ## Technology Stack & Infrastructure
 
 - **Backend:** Java 17 or 21 with Spring Boot.
+- **API Documentation:** OpenAPI (springdoc-openapi) for interactive endpoint exposure.
 - **Write Data Store (Event Store):** PostgreSQL using `JSONB` columns for fast, typed, and flexible append-only storage of domain events.
 - **Read Data Store (Cache/Projection):** Redis for O(1) response times on balance queries.
 - **Messaging/Broker:** RabbitMQ for asynchronous propagation of domain events.
@@ -53,4 +57,4 @@ Development activities MUST leverage the globally installed AI skills (agentic t
 - PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.2.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.3.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15

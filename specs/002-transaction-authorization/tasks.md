@@ -39,9 +39,9 @@ description: "Task list for transaction-authorization feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 [P] Create Flyway migration `V1__init_schema.sql` in `src/main/resources/db/migration/V1__init_schema.sql` (tables: `account_ledger`, `transaction_history`, `outbox_events`)
-- [ ] T003 [P] Configure Redis properties and `RedisTemplate` in `src/main/java/com/corebank/infrastructure/config/RedisConfig.java`
-- [ ] T004 [P] Configure RabbitMQ exchange and queues in `src/main/java/com/corebank/infrastructure/config/RabbitMQConfig.java`
+- [x] T002 [P] Create Flyway migration `V1__init_schema.sql` in `src/main/resources/db/migration/V1__init_schema.sql` (tables: `account_ledger`, `transaction_history`, `outbox_events`)
+- [x] T003 [P] Configure Redis properties and `RedisTemplate` in `src/main/java/com/corebank/infrastructure/config/RedisConfig.java`
+- [x] T004 [P] Configure RabbitMQ exchange and queues in `src/main/java/com/corebank/infrastructure/config/RabbitMQConfig.java`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -57,17 +57,17 @@ description: "Task list for transaction-authorization feature implementation"
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T005 [P] [US1] Create unit tests for `AuthorizeTransactionUseCase` in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
-- [ ] T006 [P] [US1] Create integration test for `TransactionController` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [x] T005 [P] [US1] Create unit tests for `AuthorizeTransactionUseCase` in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
+- [x] T006 [P] [US1] Create integration test for `TransactionController` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
 
 ### Implementation for User Story 1
 
-- [ ] T007 [P] [US1] Create `AccountLedger` entity (JPA) in `src/main/java/com/corebank/domain/account/AccountLedger.java`
-- [ ] T008 [P] [US1] Create `TransactionHistory` entity (JPA) in `src/main/java/com/corebank/domain/transaction/TransactionHistory.java`
-- [ ] T009 [P] [US1] Create `OutboxEvent` entity (JPA) in `src/main/java/com/corebank/domain/transaction/OutboxEvent.java`
-- [ ] T010 [US1] Create `AccountLedgerRepository`, `TransactionHistoryRepository`, `OutboxEventRepository` interfaces in `src/main/java/com/corebank/infrastructure/persistence/`
-- [ ] T011 [US1] Implement `AuthorizeTransactionUseCase` with `@Transactional` in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCase.java`
-- [ ] T012 [US1] Implement `TransactionController` `POST /api/v1/transactions/authorize` in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
+- [x] T007 [P] [US1] Create `AccountLedger` entity (JPA) in `src/main/java/com/corebank/domain/account/AccountLedger.java`
+- [x] T008 [P] [US1] Create `TransactionHistory` entity (JPA) in `src/main/java/com/corebank/domain/transaction/TransactionHistory.java`
+- [x] T009 [P] [US1] Create `OutboxEvent` entity (JPA) in `src/main/java/com/corebank/domain/transaction/OutboxEvent.java`
+- [x] T010 [US1] Create `AccountLedgerRepository`, `TransactionHistoryRepository`, `OutboxEventRepository` interfaces in `src/main/java/com/corebank/infrastructure/persistence/`
+- [x] T011 [US1] Implement `AuthorizeTransactionUseCase` with `@Transactional` in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCase.java`
+- [x] T012 [US1] Implement `TransactionController` `POST /api/v1/transactions/authorize` in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -81,15 +81,15 @@ description: "Task list for transaction-authorization feature implementation"
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T013 [P] [US2] Create unit tests for `GetBalanceQuery` in `src/test/java/com/corebank/application/query/GetBalanceQueryTest.java`
-- [ ] T014 [P] [US2] Create integration test for balance endpoint in `src/test/java/com/corebank/infrastructure/web/AccountControllerTest.java`
+- [x] T013 [P] [US2] Create unit tests for `GetBalanceQuery` in `src/test/java/com/corebank/application/query/GetBalanceQueryTest.java`
+- [x] T014 [P] [US2] Create integration test for balance endpoint in `src/test/java/com/corebank/infrastructure/web/AccountControllerTest.java`
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Create `BalanceProjection` record in `src/main/java/com/corebank/domain/account/BalanceProjection.java`
-- [ ] T016 [US2] Implement `BalanceRedisRepository` in `src/main/java/com/corebank/infrastructure/persistence/BalanceRedisRepository.java`
-- [ ] T017 [US2] Implement `GetBalanceQuery` in `src/main/java/com/corebank/application/query/GetBalanceQuery.java`
-- [ ] T018 [US2] Implement `GET /api/v1/accounts/balance` in `src/main/java/com/corebank/infrastructure/web/AccountController.java`
+- [x] T015 [P] [US2] Create `BalanceProjection` record in `src/main/java/com/corebank/domain/account/BalanceProjection.java`
+- [x] T016 [US2] Implement `BalanceRedisRepository` in `src/main/java/com/corebank/infrastructure/persistence/BalanceRedisRepository.java`
+- [x] T017 [US2] Implement `GetBalanceQuery` in `src/main/java/com/corebank/application/query/GetBalanceQuery.java`
+- [x] T018 [US2] Implement `GET /api/v1/accounts/balance` in `src/main/java/com/corebank/infrastructure/web/AccountController.java`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -103,13 +103,13 @@ description: "Task list for transaction-authorization feature implementation"
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T019 [P] [US3] Create tests for `OutboxEventPublisher` in `src/test/java/com/corebank/application/event/OutboxEventPublisherTest.java`
-- [ ] T020 [P] [US3] Create tests for `BalanceProjectionUpdater` in `src/test/java/com/corebank/application/event/BalanceProjectionUpdaterTest.java`
+- [x] T019 [P] [US3] Create tests for `OutboxEventPublisher` in `src/test/java/com/corebank/application/event/OutboxEventPublisherTest.java`
+- [x] T020 [P] [US3] Create tests for `BalanceProjectionUpdater` in `src/test/java/com/corebank/application/event/BalanceProjectionUpdaterTest.java`
 
 ### Implementation for User Story 3
 
-- [ ] T021 [US3] Create `OutboxEventPublisher` scheduled task in `src/main/java/com/corebank/application/event/OutboxEventPublisher.java`
-- [ ] T022 [US3] Create `BalanceProjectionUpdater` (@RabbitListener) in `src/main/java/com/corebank/application/event/BalanceProjectionUpdater.java`
+- [x] T021 [US3] Create `OutboxEventPublisher` scheduled task in `src/main/java/com/corebank/application/event/OutboxEventPublisher.java`
+- [x] T022 [US3] Create `BalanceProjectionUpdater` (@RabbitListener) in `src/main/java/com/corebank/application/event/BalanceProjectionUpdater.java`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -119,8 +119,8 @@ description: "Task list for transaction-authorization feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T023 Run quickstart.md validation script
-- [ ] T024 Check checkstyle and PMD rules
+- [x] T023 Run quickstart.md validation script
+- [x] T024 Check checkstyle and PMD rules
 
 ---
 

@@ -1,0 +1,70 @@
+package com.corebank.application.command;
+
+import com.corebank.domain.account.AccountLedger;
+import com.corebank.domain.transaction.OutboxEvent;
+import com.corebank.domain.transaction.TransactionHistory;
+import com.corebank.infrastructure.persistence.AccountLedgerRepository;
+import com.corebank.infrastructure.persistence.OutboxEventRepository;
+import com.corebank.infrastructure.persistence.TransactionHistoryRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class AuthorizeTransactionUseCase {
+
+    private final AccountLedgerRepository ledgerRepository;
+    private final TransactionHistoryRepository historyRepository;
+    private final OutboxEventRepository outboxRepository;
+
+    public AuthorizeTransactionUseCase(AccountLedgerRepository ledgerRepository,
+                                       TransactionHistoryRepository historyRepository,
+                                       OutboxEventRepository outboxRepository) {
+        this.ledgerRepository = ledgerRepository;
+        this.historyRepository = historyRepository;
+        this.outboxRepository = outboxRepository;
+    }
+
+    @Transactional
+    public AuthorizeTransactionResult execute(AuthorizeTransactionCommand command) {
+        Optional<AccountLedger> ledgerOpt = ledgerRepository.findByAccountId(command.accountId());
+        
+        if (ledgerOpt.isEmpty()) {
+            throw new IllegalArgumentException("ACCOUNT_NOT_FOUND");
+        }
+
+        AccountLedger ledger = ledgerOpt.get();
+        
+        if (ledger.getBalance().compareTo(command.amount()) < 0) {
+            throw new IllegalStateException("INSUFFICIENT_FUNDS");
+        }
+
+        ledger.setBalance(ledger.getBalance().subtract(command.amount()));
+        ledger.setUpdatedAt(LocalDateTime.now());
+        ledgerRepository.save(ledger);
+
+        UUID transactionId = UUID.randomUUID();
+        TransactionHistory history = new TransactionHistory(
+            transactionId, ledger.getAccountId(), command.amount(), command.type(), "AUTHORIZED", LocalDateTime.now()
+        );
+        historyRepository.save(history);
+
+        String payload = String.format(
+            "{\"eventId\":\"%s\", \"transactionId\":\"%s\", \"accountId\":\"%s\", \"amount\":%s, \"timestamp\":\"%s\"}",
+            UUID.randomUUID(), transactionId, ledger.getAccountId(), command.amount(), LocalDateTime.now()
+        );
+
+        OutboxEvent event = new OutboxEvent(
+            UUID.randomUUID(), transactionId, "TransactionAuthorizedEvent", payload, false, LocalDateTime.now()
+        );
+        outboxRepository.save(event);
+
+        return new AuthorizeTransactionResult(transactionId, "AUTHORIZED", "Transaction successful");
+    }
+
+    public record AuthorizeTransactionCommand(UUID accountId, BigDecimal amount, String type) {}
+    public record AuthorizeTransactionResult(UUID transactionId, String status, String message) {}
+}
