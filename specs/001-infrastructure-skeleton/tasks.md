@@ -22,8 +22,8 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Maven Spring Boot 3.x project without Lombok in `pom.xml`
-- [ ] T002 [P] Configure Maven to use Java 21 compiler source and target in `pom.xml`
+- [x] T001 Initialize Maven Spring Boot 3.x project without Lombok in `pom.xml`
+- [x] T002 [P] Configure Maven to use Java 21 compiler source and target in `pom.xml`
 
 ---
 
@@ -33,7 +33,7 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Add Spring Boot, DB Drivers, and Testcontainers dependencies to `pom.xml`
+- [x] T003 Add Spring Boot, DB Drivers, and Testcontainers dependencies to `pom.xml`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -47,9 +47,9 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T004 [US1] Create `docker-compose.yml` with `postgres:15-alpine` container
-- [ ] T005 [P] [US1] Append `redis:7-alpine` container to `docker-compose.yml`
-- [ ] T006 [P] [US1] Append `rabbitmq:3-management-alpine` container to `docker-compose.yml`
+- [x] T004 [US1] Create `docker-compose.yml` with `postgres:15-alpine` container
+- [x] T005 [P] [US1] Append `redis:7-alpine` container to `docker-compose.yml`
+- [x] T006 [P] [US1] Append `rabbitmq:3-management-alpine` container to `docker-compose.yml`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -63,9 +63,9 @@ description: "Task list template for feature implementation"
 
 ### Implementation for User Story 2
 
-- [ ] T007 [P] [US2] Create domain module package structure in `src/main/java/com/corebank/domain/`
-- [ ] T008 [P] [US2] Create application module package structure in `src/main/java/com/corebank/application/`
-- [ ] T009 [P] [US2] Create infrastructure module package structure in `src/main/java/com/corebank/infrastructure/`
+- [x] T007 [P] [US2] Create domain module package structure in `src/main/java/com/corebank/domain/`
+- [x] T008 [P] [US2] Create application module package structure in `src/main/java/com/corebank/application/`
+- [x] T009 [P] [US2] Create infrastructure module package structure in `src/main/java/com/corebank/infrastructure/`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -79,12 +79,12 @@ description: "Task list template for feature implementation"
 
 ### Tests for User Story 3
 
-- [ ] T010 [US3] Create integration test using Testcontainers (JUnit 5 & Mockito ready) in `src/test/java/com/corebank/CorebankApplicationTests.java` to verify Spring Boot context loads with DBs.
+- [x] T010 [US3] Create integration test using Testcontainers (JUnit 5 & Mockito ready) in `src/test/java/com/corebank/CorebankApplicationTests.java` to verify Spring Boot context loads with DBs.
 
 ### Implementation for User Story 3
 
-- [ ] T011 [US3] Configure connection strings (JDBC, Redis, RabbitMQ) in `src/main/resources/application.yml`
-- [ ] T012 [US3] Create Spring Boot application entry point in `src/main/java/com/corebank/infrastructure/CorebankApplication.java`
+- [x] T011 [US3] Configure connection strings (JDBC, Redis, RabbitMQ) in `src/main/resources/application.yml`
+- [x] T012 [US3] Create Spring Boot application entry point in `src/main/java/com/corebank/infrastructure/CorebankApplication.java`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -94,7 +94,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T013 Run quickstart.md validation instructions to verify e2e flow locally.
+- [x] T013 Run quickstart.md validation instructions to verify e2e flow locally.
 
 ---
 
