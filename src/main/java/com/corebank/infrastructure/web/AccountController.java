@@ -1,16 +1,21 @@
 package com.corebank.infrastructure.web;
 
+import java.util.UUID;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.corebank.application.query.GetBalanceQuery;
+import com.corebank.domain.exception.ResourceNotFoundException;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -34,8 +39,7 @@ public class AccountController {
             @RequestHeader("X-Account-Id") UUID accountId) {
         var projection = query.execute(accountId);
         if (projection.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "ACCOUNT_NOT_FOUND"));
+            throw new ResourceNotFoundException("Account " + accountId + " not found");
         }
         return ResponseEntity.ok(projection.get());
     }

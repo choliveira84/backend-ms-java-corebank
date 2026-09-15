@@ -55,6 +55,16 @@ class AuthorizeTransactionUseCaseTest {
 
         var command = new AuthorizeTransactionUseCase.AuthorizeTransactionCommand(accountId, new BigDecimal("50.00"), "DEBIT");
 
-        assertThrows(IllegalStateException.class, () -> useCase.execute(command));
+        assertThrows(com.corebank.domain.exception.BusinessRuleViolationException.class, () -> useCase.execute(command));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenAccountNotFound() {
+        UUID accountId = UUID.randomUUID();
+        when(ledgerRepository.findByAccountId(accountId)).thenReturn(Optional.empty());
+
+        var command = new AuthorizeTransactionUseCase.AuthorizeTransactionCommand(accountId, new BigDecimal("50.00"), "DEBIT");
+
+        assertThrows(com.corebank.domain.exception.ResourceNotFoundException.class, () -> useCase.execute(command));
     }
 }
