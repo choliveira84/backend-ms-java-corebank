@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
 
 import com.corebank.application.command.AuthorizeTransactionUseCase;
 
@@ -18,10 +19,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/api/v1/transactions")
 @Tag(name = "Transactions", description = "Transaction Authorization Endpoints")
+@Validated
 public class TransactionController {
 
     private final AuthorizeTransactionUseCase useCase;
@@ -36,15 +41,21 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Account not found"),
             @ApiResponse(responseCode = "422", description = "Transaction rejected (e.g., insufficient funds)")
     })
-    @PostMapping("/{accountId}/authorize")
+        @PostMapping("/authorize")
     public ResponseEntity<AuthorizeTransactionUseCase.AuthorizeTransactionResult> authorize(
             @Parameter(description = "Authenticated Account ID", required = true)
-            @PathVariable UUID accountId,
+            @RequestHeader("X-Account-Id") UUID accountId,
             @RequestBody @Valid TransactionRequest request) {
         var command = new AuthorizeTransactionUseCase.AuthorizeTransactionCommand(accountId, request.amount(), request.type());
         var result = useCase.execute(command);
         return ResponseEntity.ok(result);
     }
 
-    public record TransactionRequest(BigDecimal amount, String type) {}
+        public record TransactionRequest(
+            @NotNull(message = "amount is required")
+            @Positive(message = "amount must be greater than zero")
+            BigDecimal amount,
+
+                @NotBlank(message = "type is required")
+            String type) {}
 }

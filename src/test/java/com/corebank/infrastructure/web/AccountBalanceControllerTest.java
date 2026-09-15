@@ -41,11 +41,11 @@ class AccountBalanceControllerTest {
         when(getAccountBalanceQuery.execute(accountId)).thenReturn(Optional.of(result));
 
         // Warmup MockMvc call to avoid initial spring dispatcher setup overhead counting towards timeout
-        mockMvc.perform(get("/api/v1/accounts/" + UUID.randomUUID() + "/balance"));
+        mockMvc.perform(get("/api/v1/accounts/balance").header("X-Account-Id", UUID.randomUUID().toString()));
 
         // When & Then (checking timeout)
         assertTimeoutPreemptively(ofMillis(200), () -> { // Using 200ms in tests to avoid flakiness, but SC is 50ms
-            mockMvc.perform(get("/api/v1/accounts/" + accountId + "/balance"))
+            mockMvc.perform(get("/api/v1/accounts/balance").header("X-Account-Id", accountId.toString()))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.accountId").value(accountId.toString()))
                     .andExpect(jsonPath("$.availableBalance").value(500.0));
@@ -60,7 +60,7 @@ class AccountBalanceControllerTest {
         when(getAccountBalanceQuery.execute(accountId)).thenReturn(Optional.empty());
 
         // When & Then
-        mockMvc.perform(get("/api/v1/accounts/" + accountId + "/balance"))
+        mockMvc.perform(get("/api/v1/accounts/balance").header("X-Account-Id", accountId.toString()))
                 .andExpect(status().isNotFound());
     }
 
@@ -68,7 +68,7 @@ class AccountBalanceControllerTest {
     @DisplayName("Should return 400 with structured error body when UUID is invalid")
     void shouldReturn400WhenInvalidUUID() throws Exception {
         // When & Then
-        mockMvc.perform(get("/api/v1/accounts/invalid-uuid/balance"))
+        mockMvc.perform(get("/api/v1/accounts/balance").header("X-Account-Id", "invalid-uuid"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.title").value("Bad Request"))
                 .andExpect(jsonPath("$.detail").exists());
