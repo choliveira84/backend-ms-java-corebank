@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/transactions")
@@ -35,11 +36,11 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Account not found"),
             @ApiResponse(responseCode = "422", description = "Transaction rejected (e.g., insufficient funds)")
     })
-    @PostMapping("/authorize")
-    public ResponseEntity<?> authorize(
+    @PostMapping("/{accountId}/authorize")
+    public ResponseEntity<AuthorizeTransactionUseCase.AuthorizeTransactionResult> authorize(
             @Parameter(description = "Authenticated Account ID", required = true)
-            @RequestHeader("X-Account-Id") UUID accountId,
-            @RequestBody TransactionRequest request) {
+            @PathVariable UUID accountId,
+            @RequestBody @Valid TransactionRequest request) {
         var command = new AuthorizeTransactionUseCase.AuthorizeTransactionCommand(accountId, request.amount(), request.type());
         var result = useCase.execute(command);
         return ResponseEntity.ok(result);
