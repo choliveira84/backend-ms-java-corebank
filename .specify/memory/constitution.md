@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report:
-- Version change: 1.4.0 -> 1.5.0
+- Version change: 1.5.0 -> 1.6.0
 - Modified principles:
-  - Modified: I. Hexagonal Architecture (Ports and Adapters) (explicitly mandating that all use cases must be defined as interfaces with a concrete implementation)
+  - Modified: I. Hexagonal Architecture (Ports and Adapters) (explicitly structured to mandate that both use cases and repositories must be defined as interfaces with concrete implementations to enforce IN and OUT ports)
 - Added sections: N/A
 - Removed sections: N/A
 - Follow-up TODOs: N/A
@@ -12,7 +12,9 @@ Sync Impact Report:
 ## Core Principles
 
 ### I. Hexagonal Architecture (Ports and Adapters)
-The core domain must be placed at the center of the application and must remain completely agnostic of infrastructure, databases, or external frameworks. All external interactions must happen through explicit ports (IN and OUT) and adapters. There must be clear divisions between IN and OUT. For example, OUT adapters such as data access must be cleanly separated: a Spring Data JPA interface handles framework interactions, while a separate repository adapter class implements the domain's OUT port and uses the JPA interface internally. Similarly, for IN ports, every use case MUST be defined as an interface (the port) with a corresponding concrete implementation class.
+The core domain must be placed at the center of the application and must remain completely agnostic of infrastructure, databases, or external frameworks. All external interactions must happen through explicit ports (IN and OUT) and adapters. There must be clear divisions between IN and OUT:
+- **IN Ports (Use Cases)**: Every use case MUST be defined as an interface (the port) residing in the application layer, with a corresponding concrete implementation class.
+- **OUT Ports (Repositories/External Services)**: Every repository or external dependency MUST be defined as an interface (the port) within the domain or application layer. The concrete implementation class (the adapter) must reside in the infrastructure layer. For example, a repository adapter implements the domain's repository interface and internally uses framework-specific tools like a Spring Data JPA interface.
 
 ### II. Physical CQRS & Event Sourcing
 Write operations (10% of load) and read operations (90% of load) must be physically segregated to guarantee independent scalability and database load isolation. The absolute truth of the system is the immutable stream of past events (Event Sourcing) stored in PostgreSQL, not the consolidated balance.
@@ -60,4 +62,4 @@ The entire application MUST strictly adhere to SOLID foundations, general softwa
 - PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.5.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.6.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
