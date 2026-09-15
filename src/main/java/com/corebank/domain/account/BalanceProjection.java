@@ -7,5 +7,11 @@ import java.util.UUID;
 public record BalanceProjection(
         UUID accountId,
         BigDecimal availableBalance,
-        LocalDateTime lastUpdatedAt
-) {}
+                LocalDateTime lastUpdatedAt,
+                UUID lastAppliedTransactionId
+) {
+
+        public BalanceProjection(UUID accountId, BigDecimal availableBalance, LocalDateTime lastUpdatedAt) {
+                this(accountId, availableBalance, lastUpdatedAt, null);
+        }
+}
