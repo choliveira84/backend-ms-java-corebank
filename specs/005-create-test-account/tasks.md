@@ -116,5 +116,5 @@ Task: "Create integration test..."
 
 ## Phase 6: Convergence
 
-- [ ] T009 CRITICAL Add OpenAPI/Swagger annotations (@Operation, @ApiResponses, @Tag, @Schema) to TestAccountController per Constitution VIII (contradicts)
+- [X] T009 CRITICAL Add OpenAPI/Swagger annotations (@Operation, @ApiResponses, @Tag, @Schema) to TestAccountController per Constitution VIII (contradicts)
 
