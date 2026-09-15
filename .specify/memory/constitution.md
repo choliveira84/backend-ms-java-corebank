@@ -1,15 +1,9 @@
 <!--
 Sync Impact Report:
-- Version change: 0.0.0 -> 1.0.0
+- Version change: 1.1.0 -> 1.2.0
 - Modified principles:
-  - Added: I. Hexagonal Architecture (Ports and Adapters)
-  - Added: II. Physical CQRS & Event Sourcing
-  - Added: III. Immutability and Clean Design (Zero Boilerplate)
-  - Added: IV. Tolerant Eventual Consistency
-  - Added: V. Containerization and Portability
-- Added sections:
-  - Technology Stack & Infrastructure
-  - Quality Attributes & Constraints
+  - Added: VII. AI Skill Utilization
+- Added sections: N/A
 - Removed sections: N/A
 - Follow-up TODOs: N/A
 -->
@@ -32,6 +26,12 @@ The system embraces eventual consistency for read operations. The read data stor
 ### V. Containerization and Portability
 The entire application ecosystem, including the backend service, PostgreSQL, Redis, and RabbitMQ, must be packaged in Docker containers. Local development must be orchestrated using Docker Compose to ensure resource isolation and environment parity.
 
+### VI. Unit Testing (JUnit 5 & Mockito)
+Unit tests MUST always be implemented for every new feature, ensuring robustness and validating business logic. All unit testing MUST be written using JUnit 5 and Mockito.
+
+### VII. AI Skill Utilization
+Development activities MUST leverage the globally installed AI skills (agentic tools) whenever appropriate. The availability of these global skills must be continuously verified, and they should be actively used to ensure maximum productivity and adherence to established patterns.
+
 ## Technology Stack & Infrastructure
 
 - **Backend:** Java 17 or 21 with Spring Boot.
@@ -39,6 +39,7 @@ The entire application ecosystem, including the backend service, PostgreSQL, Red
 - **Read Data Store (Cache/Projection):** Redis for O(1) response times on balance queries.
 - **Messaging/Broker:** RabbitMQ for asynchronous propagation of domain events.
 - **Object Mapping:** MapStruct for fluid transition of entities between ports and adapters.
+- **Testing:** JUnit 5 and Mockito.
 
 ## Quality Attributes & Constraints
 
@@ -49,7 +50,7 @@ The entire application ecosystem, including the backend service, PostgreSQL, Red
 
 - The Constitution supersedes all other architectural decisions.
 - Any changes to the core principles (e.g., introducing a new database paradigm, abandoning CQRS) require a MAJOR version bump and architectural review.
-- PRs must be validated against the "Zero Boilerplate" and "Immutability" principles.
+- PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.2.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
