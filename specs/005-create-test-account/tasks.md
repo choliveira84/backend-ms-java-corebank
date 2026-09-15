@@ -42,14 +42,14 @@ description: "Task list for creating a test account via API"
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T001 [P] [US1] Create unit test in `src/test/java/com/corebank/application/command/CreateAccountUseCaseImplTest.java` (mocking the repositories)
-- [ ] T002 [P] [US1] Create integration test in `src/test/java/com/corebank/infrastructure/web/TestAccountControllerTest.java` (using MockMvc and Testcontainers/MockBeans)
+- [X] T001 [P] [US1] Create unit test in `src/test/java/com/corebank/application/command/CreateAccountUseCaseImplTest.java` (mocking the repositories)
+- [X] T002 [P] [US1] Create integration test in `src/test/java/com/corebank/infrastructure/web/TestAccountControllerTest.java` (using MockMvc and Testcontainers/MockBeans)
 
 ### Implementation for User Story 1
 
-- [ ] T003 [P] [US1] Create Use Case interface and records in `src/main/java/com/corebank/application/command/CreateAccountUseCase.java`
-- [ ] T004 [US1] Implement Use Case in `src/main/java/com/corebank/application/command/CreateAccountUseCaseImpl.java` (Inject `AccountLedgerRepository` and `BalanceRepository`. Save state to both synchronously without triggering RabbitMQ Outbox events)
-- [ ] T005 [US1] Implement Controller in `src/main/java/com/corebank/infrastructure/web/TestAccountController.java` (Expose `POST /api/v1/test/accounts`, validate initialBalance >= 0, annotate with `@Profile({"dev", "test"})`)
+- [X] T003 [P] [US1] Create Use Case interface and records in `src/main/java/com/corebank/application/command/CreateAccountUseCase.java`
+- [X] T004 [US1] Implement Use Case in `src/main/java/com/corebank/application/command/CreateAccountUseCaseImpl.java` (Inject `AccountLedgerRepository` and `BalanceRepository`. Save state to both synchronously without triggering RabbitMQ Outbox events)
+- [X] T005 [US1] Implement Controller in `src/main/java/com/corebank/infrastructure/web/TestAccountController.java` (Expose `POST /api/v1/test/accounts`, validate initialBalance >= 0, annotate with `@Profile({"dev", "test"})`)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -59,7 +59,7 @@ description: "Task list for creating a test account via API"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T006 Run quickstart.md validation
+- [X] T006 Run quickstart.md validation
 
 ---
 
