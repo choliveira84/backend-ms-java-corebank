@@ -1,10 +1,11 @@
 # Phase 0: Research & Decisions
 
-## 1. Testcontainers for Integration Tests
+## 1. Integration Tests
 
-- **Decision**: Adopt Testcontainers for integration tests in conjunction with JUnit 5.
-- **Rationale**: The project explicitly relies on Docker for containerization and local parity. Testcontainers is the standard in the Spring Boot ecosystem for spinning up ephemeral containers (PostgreSQL, Redis, RabbitMQ) during test execution, ensuring tests are reliable and not dependent on external state.
-- **Alternatives considered**: Relying on an externally running `docker-compose up` before tests (rejected as it is prone to environmental issues and state pollution).
+- **Question**: Are we utilizing Testcontainers for the integration tests?
+- **Decision**: No. We will rely on the local `docker-compose` infrastructure and standard `@SpringBootTest` instead of Testcontainers.
+- **Reasoning**: Testcontainers was originally selected but failed due to local Docker daemon Named Pipe socket constraints in the development environment. Relying on the static `docker-compose` containers provides a simpler testing approach while still verifying integration with real database instances.
+- **Next Steps**: Removed Testcontainers dependencies from `pom.xml`.
 
 ## 2. Standard Docker Image Versions
 
