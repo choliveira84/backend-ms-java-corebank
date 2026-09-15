@@ -22,7 +22,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Add `springdoc-openapi-starter-webmvc-ui` dependency to `pom.xml`
+- [x] T001 Add `springdoc-openapi-starter-webmvc-ui` dependency to `pom.xml`
 
 ---
 
@@ -30,7 +30,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
 
-- [ ] T002 Create global OpenAPI configuration bean in `src/main/java/com/corebank/infrastructure/config/OpenApiConfig.java` to define Title, Version, and Description (FR-005).
+- [x] T002 Create global OpenAPI configuration bean in `src/main/java/com/corebank/infrastructure/config/OpenApiConfig.java` to define Title, Version, and Description (FR-005).
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -46,8 +46,8 @@ description: "Task list template for feature implementation"
 
 *(Note: Since springdoc-openapi handles both the UI and the JSON export from the same annotations, both stories are implemented via the same tasks.)*
 
-- [ ] T003 [P] [US1] Annotate `TransactionController` (`src/main/java/com/corebank/infrastructure/web/TransactionController.java`) with `@Tag` and `@Operation` for the `POST /api/v1/transactions/authorize` endpoint, detailing headers (`X-Account-Id`) and response codes (FR-003).
-- [ ] T004 [P] [US1] Annotate `AccountController` (`src/main/java/com/corebank/infrastructure/web/AccountController.java`) with `@Tag` and `@Operation` for the `GET /api/v1/accounts/balance` endpoint, detailing headers (`X-Account-Id`) and response codes (FR-004).
+- [x] T003 [P] [US1] Annotate `TransactionController` (`src/main/java/com/corebank/infrastructure/web/TransactionController.java`) with `@Tag` and `@Operation` for the `POST /api/v1/transactions/authorize` endpoint, detailing headers (`X-Account-Id`) and response codes (FR-003).
+- [x] T004 [P] [US1] Annotate `AccountController` (`src/main/java/com/corebank/infrastructure/web/AccountController.java`) with `@Tag` and `@Operation` for the `GET /api/v1/accounts/balance` endpoint, detailing headers (`X-Account-Id`) and response codes (FR-004).
 
 **Checkpoint**: At this point, User Story 1 and 2 should be fully functional and testable independently.
 
@@ -57,7 +57,7 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T005 Run the verification steps in `specs/003-openapi-docs/quickstart.md` manually to ensure the Swagger UI renders correctly without errors.
+- [x] T005 Run the verification steps in `specs/003-openapi-docs/quickstart.md` manually to ensure the Swagger UI renders correctly without errors.
 
 ---
 
