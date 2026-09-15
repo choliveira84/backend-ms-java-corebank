@@ -19,6 +19,8 @@ Este projeto implementa a base de um sistema bancário com foco em:
 - Autorização de transação: `POST /api/v1/transactions/authorize` com header `X-Account-Id`
 - Criação de conta de teste em ambiente local: `POST /api/v1/test/accounts` em perfis `dev` e `test`
 - Cenários cobertos: sucesso, conta inexistente, erro de validação e autorização rejeitada por saldo insuficiente
+- Consistência eventual: a consulta retorna imediatamente a projeção Redis disponível; após uma autorização, a projeção deve convergir em até 5 segundos no ambiente controlado
+- Eventos duplicados: uma autorização já aplicada é ignorada pela projeção usando o identificador da transação
 
 ## Swagger
 
@@ -100,6 +102,20 @@ docker compose up -d
 ```bash
 ./mvnw test
 ```
+
+### Diagnóstico da projeção de saldo
+
+O fluxo de leitura é eventualmente consistente. Depois de uma autorização aceita, a consulta pode retornar momentaneamente o último saldo disponível no Redis, sem aguardar o RabbitMQ. O evento deve atualizar a projeção em até 5 segundos; atrasos maiores aparecem como avisos de evento obsoleto nos logs da aplicação.
+
+Para reproduzir o fluxo manualmente:
+
+1. Crie uma conta pelo controller de apoio.
+2. Consulte o saldo e guarde o valor inicial.
+3. Autorize uma transação usando o mesmo `X-Account-Id`.
+4. Consulte o saldo imediatamente e novamente após alguns segundos.
+5. Verifique os logs caso a atualização não ocorra dentro da janela de 5 segundos.
+
+O limite pode ser alterado pela variável `COREBANK_PROJECTION_MAX_DELAY`, cujo padrão é `5s`.
 
 ## Status do projeto
 

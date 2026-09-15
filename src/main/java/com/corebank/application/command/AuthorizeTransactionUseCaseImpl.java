@@ -54,8 +54,8 @@ public class AuthorizeTransactionUseCaseImpl implements AuthorizeTransactionUseC
         historyRepository.save(history);
 
         String payload = String.format(
-                "{\"eventId\":\"%s\", \"transactionId\":\"%s\", \"accountId\":\"%s\", \"amount\":%s, \"timestamp\":\"%s\"}",
-                randomUUID(), transactionId, ledger.getAccountId(), command.amount(), LocalDateTime.now());
+                "{\"eventId\":\"%s\", \"transactionId\":\"%s\", \"accountId\":\"%s\", \"amount\":%s, \"type\":\"%s\", \"status\":\"AUTHORIZED\", \"timestamp\":\"%s\"}",
+                randomUUID(), transactionId, ledger.getAccountId(), command.amount(), command.type(), LocalDateTime.now());
 
         OutboxEvent event = new OutboxEvent(
                 randomUUID(), transactionId, "TransactionAuthorizedEvent", payload, false, LocalDateTime.now());

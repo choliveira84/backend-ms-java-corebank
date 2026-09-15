@@ -18,10 +18,13 @@ public class BalanceProjectionUpdater {
     private static final Logger log = LoggerFactory.getLogger(BalanceProjectionUpdater.class);
     private final BalanceRedisRepository repository;
     private final ObjectMapper mapper;
+    private final ProjectionConsistencyPolicy consistencyPolicy;
 
-    public BalanceProjectionUpdater(BalanceRedisRepository repository, ObjectMapper mapper) {
+    public BalanceProjectionUpdater(BalanceRedisRepository repository, ObjectMapper mapper,
+            ProjectionConsistencyPolicy consistencyPolicy) {
         this.repository = repository;
         this.mapper = mapper;
+        this.consistencyPolicy = consistencyPolicy;
     }
 
     @RabbitListener(queues = "transaction.authorized.queue")
@@ -29,13 +32,30 @@ public class BalanceProjectionUpdater {
         try {
             JsonNode node = mapper.readTree(payload);
             UUID accountId = UUID.fromString(node.get("accountId").asText());
-            // Ideally the event should contain the new balance, but for this exercise we 
-            // fetch it or we could subtract it. In CQRS, the read model projection could calculate it.
-            // Here we'll just simulate an update.
-            var existing = repository.getBalance(accountId).orElse(new BalanceProjection(accountId, BigDecimal.ZERO, LocalDateTime.now()));
+                var existing = repository.getBalance(accountId);
+                if (existing.isEmpty()) {
+                log.warn("Projection skipped because no initial balance exists for account {}", accountId);
+                return;
+                }
+
+                UUID transactionId = UUID.fromString(node.get("transactionId").asText());
+                if (transactionId.equals(existing.get().lastAppliedTransactionId())) {
+                    log.info("Duplicate transaction event ignored for account {} and transaction {}", accountId, transactionId);
+                    return;
+                }
+
             BigDecimal amount = new BigDecimal(node.get("amount").asText());
-            
-            BalanceProjection updated = new BalanceProjection(accountId, existing.availableBalance().subtract(amount), LocalDateTime.now());
+                LocalDateTime eventTime = node.hasNonNull("timestamp")
+                    ? LocalDateTime.parse(node.get("timestamp").asText())
+                    : LocalDateTime.now(consistencyPolicy.clock());
+                ProjectionFreshness freshness = consistencyPolicy.freshnessOf(eventTime);
+                if (freshness.stale()) {
+                log.warn("Stale transaction event detected for account {} with age {} and threshold {}",
+                            accountId, freshness.age(), freshness.maxDelay());
+                }
+
+                BalanceProjection updated = new BalanceProjection(accountId,
+                        existing.get().availableBalance().subtract(amount), eventTime, transactionId);
             repository.saveBalance(updated);
             
             log.info("Updated balance projection for account {}", accountId);

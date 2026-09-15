@@ -15,3 +15,7 @@ spring:
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USER:guest}
     password: ${RABBITMQ_PASS:guest}
+corebank:
+  projection:
+    consistency:
+      max-delay: ${COREBANK_PROJECTION_MAX_DELAY:5s}
