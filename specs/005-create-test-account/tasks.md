@@ -103,3 +103,11 @@ Task: "Create integration test..."
 1. Complete Phase 3: User Story 1
 2. **STOP and VALIDATE**: Test User Story 1 independently using `quickstart.md`
 3. MVP is ready for dev/test environments.
+
+---
+
+## Phase 5: Convergence
+
+- [ ] T007 CRITICAL Add @Valid to TestAccountController endpoint and Bean Validation annotations (@NotNull, @PositiveOrZero) to CreateTestAccountRequest DTO per Constitution X (contradicts)
+- [ ] T008 [P] Add timeout assertion (< 200ms) to TestAccountControllerTest per SC-001 (partial)
+
