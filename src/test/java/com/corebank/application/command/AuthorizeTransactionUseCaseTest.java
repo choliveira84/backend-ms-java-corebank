@@ -3,9 +3,9 @@ package com.corebank.application.command;
 import com.corebank.domain.account.AccountLedger;
 import com.corebank.domain.transaction.OutboxEvent;
 import com.corebank.domain.transaction.TransactionHistory;
-import com.corebank.infrastructure.persistence.AccountLedgerRepository;
-import com.corebank.infrastructure.persistence.OutboxEventRepository;
-import com.corebank.infrastructure.persistence.TransactionHistoryRepository;
+import com.corebank.domain.account.AccountLedgerRepository;
+import com.corebank.domain.transaction.OutboxEventRepository;
+import com.corebank.domain.transaction.TransactionHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ class AuthorizeTransactionUseCaseTest {
         ledgerRepository = mock(AccountLedgerRepository.class);
         historyRepository = mock(TransactionHistoryRepository.class);
         outboxRepository = mock(OutboxEventRepository.class);
-        useCase = new AuthorizeTransactionUseCase(ledgerRepository, historyRepository, outboxRepository);
+        useCase = new AuthorizeTransactionUseCaseImpl(ledgerRepository, historyRepository, outboxRepository);
     }
 
     @Test

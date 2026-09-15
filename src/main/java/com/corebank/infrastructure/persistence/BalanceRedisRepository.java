@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.corebank.domain.account.BalanceRepository;
+
 @Repository
-public class BalanceRedisRepository {
+public class BalanceRedisRepository implements BalanceRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;
 

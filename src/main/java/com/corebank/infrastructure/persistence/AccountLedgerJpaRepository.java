@@ -7,6 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface AccountLedgerRepository extends JpaRepository<AccountLedger, UUID> {
+public interface AccountLedgerJpaRepository extends JpaRepository<AccountLedger, UUID> {
     Optional<AccountLedger> findByAccountId(UUID accountId);
 }

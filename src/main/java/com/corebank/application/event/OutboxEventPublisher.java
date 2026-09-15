@@ -1,7 +1,7 @@
 package com.corebank.application.event;
 
 import com.corebank.infrastructure.config.RabbitMQConfig;
-import com.corebank.infrastructure.persistence.OutboxEventRepository;
+import com.corebank.domain.transaction.OutboxEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
