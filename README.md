@@ -71,6 +71,8 @@ Esse mecanismo é útil para validar cenários de integração, testar fluxos de
       "type": "DEBIT"
     }
     ```
+  - Tipos aceitos: `DEBIT`, `TRANSFER` e `PIX` (valores exatos e sensíveis a maiúsculas/minúsculas)
+  - Tipos desconhecidos, vazios, com espaços ou capitalização diferente retornam `400`
   - Respostas esperadas: `200`, `400`, `404` e `422`
 
 ## Stack

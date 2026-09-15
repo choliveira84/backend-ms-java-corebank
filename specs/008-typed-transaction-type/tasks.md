@@ -10,9 +10,9 @@
 
 **Purpose**: Establish the shared transaction vocabulary and preserve the existing API/error contract.
 
-- [ ] T001 Create the closed `TransactionType` enum with `DEBIT`, `TRANSFER`, and `PIX` in `src/main/java/com/corebank/domain/transaction/TransactionType.java`
-- [ ] T002 [P] Document the supported transaction type values and strict case-sensitive behavior in `README.md`
-- [ ] T003 [P] Update the transaction authorization example and supported values in `specs/008-typed-transaction-type/contracts/api.md`
+- [X] T001 Create the closed `TransactionType` enum with `DEBIT`, `TRANSFER`, and `PIX` in `src/main/java/com/corebank/domain/transaction/TransactionType.java`
+- [X] T002 [P] Document the supported transaction type values and strict case-sensitive behavior in `README.md`
+- [X] T003 [P] Update the transaction authorization example and supported values in `specs/008-typed-transaction-type/contracts/api.md`
 
 ---
 
@@ -20,10 +20,10 @@
 
 **Purpose**: Prepare the application command and serialization boundaries for the typed value.
 
-- [ ] T004 Change `AuthorizeTransactionCommand.type` from `String` to `TransactionType` in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCase.java`
-- [ ] T005 [P] Add enum-focused unit coverage for all supported values in `src/test/java/com/corebank/domain/transaction/TransactionTypeTest.java`
-- [ ] T006 [P] Verify the existing `GlobalExceptionHandler` maps enum binding and missing/null request errors to structured HTTP 400 responses in `src/main/java/com/corebank/infrastructure/web/exception/GlobalExceptionHandler.java`
-- [ ] T007 Update the transaction history and outbox serialization boundary to persist enum names without schema changes in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCaseImpl.java`
+- [X] T004 Change `AuthorizeTransactionCommand.type` from `String` to `TransactionType` in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCase.java`
+- [X] T005 [P] Add enum-focused unit coverage for all supported values in `src/test/java/com/corebank/domain/transaction/TransactionTypeTest.java`
+- [X] T006 [P] Verify the existing `GlobalExceptionHandler` maps enum binding and missing/null request errors to structured HTTP 400 responses in `src/main/java/com/corebank/infrastructure/web/exception/GlobalExceptionHandler.java`
+- [X] T007 Update the transaction history and outbox serialization boundary to persist enum names without schema changes in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCaseImpl.java`
 
 **Checkpoint**: The application has one typed transaction vocabulary and can preserve the existing text-based persistence/event formats.
 
@@ -37,15 +37,15 @@
 
 ### Tests for User Story 1
 
-- [ ] T008 [P] [US1] Add MockMvc coverage for valid `DEBIT`, `TRANSFER`, and `PIX` request bodies in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
-- [ ] T009 [P] [US1] Add MockMvc coverage for unknown `PIX2` or `CASH` values returning 400 and never invoking the use case in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
-- [ ] T010 [P] [US1] Add MockMvc coverage proving valid enum values are propagated to `AuthorizeTransactionCommand` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T008 [P] [US1] Add MockMvc coverage for valid `DEBIT`, `TRANSFER`, and `PIX` request bodies in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T009 [P] [US1] Add MockMvc coverage for unknown `PIX2` or `CASH` values returning 400 and never invoking the use case in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T010 [P] [US1] Add MockMvc coverage proving valid enum values are propagated to `AuthorizeTransactionCommand` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Change `TransactionController.TransactionRequest.type` from `String` to `TransactionType` and keep request-body validation in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
-- [ ] T012 [US1] Pass the typed `TransactionType` directly into `AuthorizeTransactionCommand` in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
-- [ ] T013 [US1] Preserve successful authorization and insufficient-funds behavior for the typed command in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCaseImpl.java`
+- [X] T011 [US1] Change `TransactionController.TransactionRequest.type` from `String` to `TransactionType` and keep request-body validation in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
+- [X] T012 [US1] Pass the typed `TransactionType` directly into `AuthorizeTransactionCommand` in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
+- [X] T013 [US1] Preserve successful authorization and insufficient-funds behavior for the typed command in `src/main/java/com/corebank/application/command/AuthorizeTransactionUseCaseImpl.java`
 
 **Checkpoint**: User Story 1 is independently functional; invalid transaction types fail at the API boundary and valid values preserve authorization behavior.
 
@@ -59,15 +59,15 @@
 
 ### Tests for User Story 2
 
-- [ ] T014 [P] [US2] Add tests for omitted and null `type` values returning structured 400 responses in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
-- [ ] T015 [P] [US2] Add tests for empty, whitespace-padded, lowercase, and mixed-case values returning 400 in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
-- [ ] T016 [US2] Add a regression assertion that invalid type requests do not invoke `AuthorizeTransactionUseCase` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T014 [P] [US2] Add tests for omitted and null `type` values returning structured 400 responses in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T015 [P] [US2] Add tests for empty, whitespace-padded, lowercase, and mixed-case values returning 400 in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
+- [X] T016 [US2] Add a regression assertion that invalid type requests do not invoke `AuthorizeTransactionUseCase` in `src/test/java/com/corebank/infrastructure/web/TransactionControllerTest.java`
 
 ### Implementation for User Story 2
 
-- [ ] T017 [US2] Ensure enum conversion failures identify the invalid request as a 400 ProblemDetail without changing existing error response fields in `src/main/java/com/corebank/infrastructure/web/exception/GlobalExceptionHandler.java`
-- [ ] T018 [US2] Add OpenAPI schema annotations/examples that enumerate `DEBIT`, `TRANSFER`, and `PIX` for the request type in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
-- [ ] T019 [US2] Keep exact case-sensitive binding without trimming or custom normalization in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
+- [X] T017 [US2] Ensure enum conversion failures identify the invalid request as a 400 ProblemDetail without changing existing error response fields in `src/main/java/com/corebank/infrastructure/web/exception/GlobalExceptionHandler.java`
+- [X] T018 [US2] Add OpenAPI schema annotations/examples that enumerate `DEBIT`, `TRANSFER`, and `PIX` for the request type in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
+- [X] T019 [US2] Keep exact case-sensitive binding without trimming or custom normalization in `src/main/java/com/corebank/infrastructure/web/TransactionController.java`
 
 **Checkpoint**: User Stories 1 and 2 both pass independently, with clear boundary errors and no business execution for invalid input.
 
@@ -77,13 +77,13 @@
 
 **Purpose**: Validate downstream compatibility, documentation, and the complete regression suite.
 
-- [ ] T020 [P] Add authorization use-case tests for `DEBIT`, `TRANSFER`, and `PIX` command values and preserve existing business assertions in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
-- [ ] T021 [P] Add assertions that transaction history and outbox payloads preserve the enum name in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
-- [ ] T022 [P] Update the feature quickstart with valid `PIX` and invalid-value examples in `specs/008-typed-transaction-type/quickstart.md`
-- [ ] T023 [P] Update the formal API contract and data model if implementation details require clarification in `specs/008-typed-transaction-type/contracts/api.md` and `specs/008-typed-transaction-type/data-model.md`
-- [ ] T024 Run focused tests with `./mvnw -q -Dtest=TransactionControllerTest,AuthorizeTransactionUseCaseTest,TransactionTypeTest test`
-- [ ] T025 Run the full regression suite with `./mvnw test -q`
-- [ ] T026 Verify the Swagger request schema exposes exactly `DEBIT`, `TRANSFER`, and `PIX` using the running application and `specs/008-typed-transaction-type/quickstart.md`
+- [X] T020 [P] Add authorization use-case tests for `DEBIT`, `TRANSFER`, and `PIX` command values and preserve existing business assertions in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
+- [X] T021 [P] Add assertions that transaction history and outbox payloads preserve the enum name in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
+- [X] T022 [P] Update the feature quickstart with valid `PIX` and invalid-value examples in `specs/008-typed-transaction-type/quickstart.md`
+- [X] T023 [P] Update the formal API contract and data model if implementation details require clarification in `specs/008-typed-transaction-type/contracts/api.md` and `specs/008-typed-transaction-type/data-model.md`
+- [X] T024 Run focused tests with `./mvnw -q -Dtest=TransactionControllerTest,AuthorizeTransactionUseCaseTest,TransactionTypeTest test`
+- [X] T025 Run the full regression suite with `./mvnw test -q`
+- [X] T026 Verify the Swagger request schema exposes exactly `DEBIT`, `TRANSFER`, and `PIX` using the running application and `specs/008-typed-transaction-type/quickstart.md`
 
 ---
 
