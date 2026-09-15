@@ -42,6 +42,12 @@ As a developer, I want to throw domain-specific custom exceptions (e.g., `Accoun
 - What happens if an unexpected/unknown exception occurs? (It MUST be caught as a fallback and mapped to a 500 Internal Server Error, without exposing internal stack traces to the client).
 - What happens if validation annotations (`@Valid`) fail on the controller payload? (It MUST return a 400 Bad Request with a standard format detailing which fields failed validation).
 
+## Clarifications
+
+### Session 2026-09-15
+
+- Q: Should the controller classes also be refactored to remove their existing error-handling logic? → A: Yes. Refactor the controllers to remove `try/catch` blocks and let the `ControllerAdvice` intercept everything.
+
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
@@ -50,7 +56,8 @@ As a developer, I want to throw domain-specific custom exceptions (e.g., `Accoun
 - **FR-002**: The system MUST return a unified, standardized JSON error response structure for all errors.
 - **FR-003**: The system MUST define custom domain exceptions for known error scenarios (e.g., Not Found, Business Rule Violation).
 - **FR-004**: The system MUST map custom domain exceptions to specific HTTP status codes (e.g., 404 for Not Found, 422 for Unprocessable Entity).
-- **FR-005**: The system MUST be refactored to replace generic exception throwing in the current codebase with the newly created custom exceptions.
+- **FR-005**: The system MUST be refactored to replace generic exception throwing in the core domain use-cases with the newly created custom exceptions.
+- **FR-006**: The existing controller classes MUST be refactored to remove manual `try/catch` exception handling, delegating all error translation to the global Controller Advice.
 
 ### Key Entities
 
