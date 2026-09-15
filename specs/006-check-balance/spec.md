@@ -28,9 +28,12 @@ Como um cliente final ou sistema interfaceador, eu desejo consultar o saldo atua
 ### Edge Cases
 
 - What happens when a conta foi criada, mas a consistência eventual ainda não sincronizou o saldo para a base de leitura?
-  - A consulta deve retornar o status de conta não encontrada. O cliente (aplicativo frontend) deve ser instruído a tentar novamente, seguindo a premissa arquitetural de Tolerant Eventual Consistency.
+  - A consulta deve retornar 404 Not Found quando a conta ainda não estiver disponível na base de leitura.
+  - O cliente deve ser instruído a tentar novamente em até 5 segundos, seguindo a premissa arquitetural de Tolerant Eventual Consistency.
+  - O endpoint de saldo MUST NOT consultar o banco principal de escrita para resolver a operação de leitura.
 - How does system handle identificador de conta malformado?
-  - A chamada deve ser rejeitada imediatamente na borda da aplicação indicando erro de validação (Bad Request).
+  - A chamada deve ser rejeitada imediatamente na borda da aplicação indicando erro de validação (400 Bad Request).
+  - O sistema deve validar o formato do accountId antes de buscar o saldo.
 
 ## Requirements *(mandatory)*
 
@@ -49,8 +52,8 @@ Como um cliente final ou sistema interfaceador, eu desejo consultar o saldo atua
 
 ### Measurable Outcomes
 
-- **SC-001**: Tempo de resposta do endpoint de consulta de saldo deve ser consistentemente menor que 50ms para 95% das requisições (P95).
-- **SC-002**: A funcionalidade deve conseguir suportar alta concorrência simulada (isolamento de leitura) sem degradar o tempo de resposta ou repassar carga ao banco principal de escrita.
+- **SC-001**: Em um cenário de carga de 100 requisições por segundo durante 60 segundos, 95% das requisições do endpoint de consulta de saldo devem responder em menos de 50ms (P95).
+- **SC-002**: Sob a mesma carga, a operação de leitura deve permanecer isolada da base transacional de escrita; o banco principal de escrita não pode receber consultas de saldo, e o tempo de resposta deve continuar em menos de 50ms para 95% das requisições.
 
 ## Assumptions
 

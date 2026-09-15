@@ -57,9 +57,12 @@ description: "Task list for Check Balance feature"
 
 ## Phase 4: Polish & Cross-Cutting Concerns
 
-**Purpose**: Improvements that affect multiple user stories
+**Purpose**: Improvements that affect the balance-read user story and ensure contract clarity
 
 - [x] T006 Run quickstart.md validation to manually verify the full flow (200 OK, 404 Not Found, 400 Bad Request)
+- [x] T007 [US1] Consolidate the duplicated balance query port pair into a single IN port and refactor the controller to use the canonical query contract, preserving the Hexagonal Architecture and avoiding duplicate entry points.
+- [x] T008 [US1] Validate the stale-read contract for eventual consistency: when the Redis projection has not caught up, the balance endpoint must return 404 and the API contract must document the retry window of up to 5 seconds.
+- [x] T009 [US1] Verify the OpenAPI contract for GET /api/v1/accounts/{accountId}/balance, including 200, 400 and 404 response examples and validation messages.
 
 ---
 
