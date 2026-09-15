@@ -111,3 +111,10 @@ Task: "Create integration test..."
 - [X] T007 CRITICAL Add @Valid to TestAccountController endpoint and Bean Validation annotations (@NotNull, @PositiveOrZero) to CreateTestAccountRequest DTO per Constitution X (contradicts)
 - [X] T008 [P] Add timeout assertion (< 200ms) to TestAccountControllerTest per SC-001 (partial)
 
+
+---
+
+## Phase 6: Convergence
+
+- [ ] T009 CRITICAL Add OpenAPI/Swagger annotations (@Operation, @ApiResponses, @Tag, @Schema) to TestAccountController per Constitution VIII (contradicts)
+
