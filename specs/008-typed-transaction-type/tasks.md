@@ -80,7 +80,7 @@
 - [X] T020 [P] Add authorization use-case tests for `DEBIT`, `TRANSFER`, and `PIX` command values and preserve existing business assertions in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
 - [X] T021 [P] Add assertions that transaction history and outbox payloads preserve the enum name in `src/test/java/com/corebank/application/command/AuthorizeTransactionUseCaseTest.java`
 - [X] T022 [P] Update the feature quickstart with valid `PIX` and invalid-value examples in `specs/008-typed-transaction-type/quickstart.md`
-- [X] T023 [P] Update the formal API contract and data model if implementation details require clarification in `specs/008-typed-transaction-type/contracts/api.md` and `specs/008-typed-transaction-type/data-model.md`
+- [X] T023 [P] Update the formal API contract and data model to document the final enum values in `specs/008-typed-transaction-type/contracts/api.md` and `specs/008-typed-transaction-type/data-model.md`
 - [X] T024 Run focused tests with `./mvnw -q -Dtest=TransactionControllerTest,AuthorizeTransactionUseCaseTest,TransactionTypeTest test`
 - [X] T025 Run the full regression suite with `./mvnw test -q`
 - [X] T026 Verify the Swagger request schema exposes exactly `DEBIT`, `TRANSFER`, and `PIX` using the running application and `specs/008-typed-transaction-type/quickstart.md`
