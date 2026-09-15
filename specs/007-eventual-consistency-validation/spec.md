@@ -13,6 +13,7 @@
 ### Session 2026-09-15
 
 - Q: A feature deve incluir autenticação e autorização reais? → A: Não; o projeto é uma seleção para emprego e mantém o contexto de conta simplificado para fins de demonstração.
+- Q: Qual comportamento a consulta de saldo deve adotar enquanto a projeção ainda está dentro da janela de até 5 segundos? → A: Retornar imediatamente o saldo atualmente disponível na projeção, aceitando a defasagem documentada dentro do limite acordado.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -101,3 +102,4 @@ Os times de operação e suporte precisam compreender a janela de atualização 
 - Customers expect a coherent balance experience, even when the read model is temporarily behind the write state.
 - The system will continue to provide a clear monitoring path for detecting abnormal projection lag before it affects customer trust.
 - Real authentication and authorization are out of scope for this feature; the existing simplified account context is sufficient for the employment-selection demonstration.
+- While the projection is within the accepted delay window, balance queries return the latest available projected value instead of waiting or failing.

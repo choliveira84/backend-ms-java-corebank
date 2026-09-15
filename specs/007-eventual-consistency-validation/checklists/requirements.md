@@ -22,6 +22,11 @@
 - [x] Scope is clearly bounded
 - [x] Dependencies and assumptions identified
 
+## Clarifications
+
+- [x] Real authentication and authorization explicitly excluded from scope
+- [x] Balance-query behavior during the accepted five-second delay explicitly defined
+
 ## Feature Readiness
 
 - [x] All functional requirements have clear acceptance criteria
