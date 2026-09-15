@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report:
-- Version change: 1.6.0 -> 1.7.0
-- Modified principles: N/A
-- Added sections:
-  - X. Controller Input Validation
+- Version change: 1.7.0 -> 1.8.0
+- Modified principles:
+  - Modified: VIII. API Documentation (OpenAPI) (explicitly mandated that absolutely every endpoint MUST be mapped to Swagger)
+- Added sections: N/A
 - Removed sections: N/A
 - Follow-up TODOs: N/A
 -->
@@ -35,7 +35,7 @@ Unit tests MUST always be implemented for every new feature, ensuring robustness
 Development activities MUST leverage the globally installed AI skills (agentic tools) whenever appropriate. The availability of these global skills must be continuously verified, and they should be actively used to ensure maximum productivity and adherence to established patterns.
 
 ### VIII. API Documentation (OpenAPI)
-The application API MUST be documented and exposed using the OpenAPI specification. This ensures a standardized, discoverable, and interactive contract for all REST endpoints, facilitating upstream integration and front-end development.
+The application API MUST be documented and exposed using the OpenAPI specification. Every single controller endpoint MUST be explicitly mapped to Swagger (using Springdoc/OpenAPI annotations like `@Operation`, `@ApiResponses`, etc.). This ensures a standardized, discoverable, and interactive contract for all REST endpoints, leaving no undocumented "hidden" endpoints and facilitating upstream integration.
 
 ### IX. SOLID and Clean Code Principles
 The entire application MUST strictly adhere to SOLID foundations, general software engineering best practices, and well-established design patterns. Development MUST follow DRY (Don't Repeat Yourself) to minimize code duplication and YAGNI (You Aren't Gonna Need It) to prevent over-engineering and premature optimization.
@@ -65,4 +65,4 @@ Every controller endpoint that receives a request body MUST validate the payload
 - PRs must be validated against the "Zero Boilerplate", "Immutability", and "Unit Testing" principles.
 - Use `requisitos_corebank.md` and `manifesto_arquitetural_corebank.md` as foundational references for business and architectural guidelines.
 
-**Version**: 1.7.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
+**Version**: 1.8.0 | **Ratified**: 2026-09-15 | **Last Amended**: 2026-09-15
